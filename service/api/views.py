@@ -47,7 +47,6 @@ async def get_reco(
         reco = [random.randint(10, 1000) for _ in range(10)]
     else:
         raise ValueError()
-        
     return RecoResponse(user_id=user_id, items=reco)
 
 
