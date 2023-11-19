@@ -46,7 +46,8 @@ async def get_reco(
     elif model_name == "random":
         reco = [random.randint(10, 1000) for _ in range(10)]
     else:
-        pass  # raise ValueError()
+        k_recs = request.app.state.k_recs
+        reco = list(range(k_recs))
     return RecoResponse(user_id=user_id, items=reco)
 
 
