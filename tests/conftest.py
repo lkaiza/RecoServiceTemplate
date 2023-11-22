@@ -30,4 +30,4 @@ def client(app: FastAPI) -> TestClient:
 
 @pytest.fixture
 def unknown_model() -> str:
-    return "".join(random.choices(string.ascii_letters))
+    return "".join(random.choices(string.ascii_letters, k=10))
