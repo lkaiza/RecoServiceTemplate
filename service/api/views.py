@@ -30,9 +30,9 @@ async def health() -> str:
     tags=["Recommendations"],
     response_model=RecoResponse,
     responses={
-        "404": {"description": "Model or user not found", "model": Error},
-        "200": {"description": "Successful Response"},
-    },
+        "404": {"model": Error, "description": "Model or user not found"},
+        "200": {"description": "Successful Response"}
+    }
 )
 async def get_reco(
     request: Request,
