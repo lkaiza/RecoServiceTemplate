@@ -8,7 +8,7 @@ def read_config(config_path: str) -> dict:
         return cfg
 
 
-def get_unique(data: list):
+def get_unique(data: object):
     data = np.array(data)
     _, idx = np.unique(data, return_index=True)
     return data[np.sort(idx)]
