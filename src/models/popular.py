@@ -7,6 +7,7 @@ from .base import BaseRecommender
 class Popular(BaseRecommender):
     def __init__(self, config=None, max_k=10, days=30, item_column="item_id", dt_column="date"):
         self.config = config
+        self.users_mapping = []
         
         if self.config is None:
             self.max_k = max_k

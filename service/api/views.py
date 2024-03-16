@@ -18,18 +18,18 @@ class RecoResponse(BaseModel):
 config_path = "config.yml"
 config = read_config(config_path)
 
-models = dict()
+models = {}
 # online models
 models['lightfm'] = LightFMWrapperCustom(config)
-# models['knn'] = kNN(config)
+models['knn'] = kNN(config)
 
 # offline models
 models['popular'] = Popular(config)
 models['userknn'] = OfflineModel("userknn", config)
 models['dssm'] = OfflineModel("dssm", config)
-models['encoder']= OfflineModel("encoder", config)
+models['encoder'] = OfflineModel("encoder", config)
 models['recbole_recvae'] = OfflineModel("recvae", config)
-models['catboost_ranker']= OfflineModel("catboost_ranker", config)
+models['catboost_ranker'] = OfflineModel("catboost_ranker", config)
 
 router = APIRouter()
 
@@ -62,12 +62,11 @@ async def get_reco(
 
     if user_id > 10**9:
         raise UserNotFoundError(error_message=f"User {user_id} not found")
-
-    if model_name in models.keys():
-        if user_id in models[model_name].users_mapping: 
+    if model_name in models:
+        if user_id in models[model_name].users_mapping:
             reco = models[model_name].recommend(user_id, k_recs)
         else:
-            reco = list()
+            reco = []
     else:
         raise ModelNotFoundError(error_message=f"Model {model_name} not found")
 
