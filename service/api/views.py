@@ -20,16 +20,16 @@ config = read_config(config_path)
 
 models = {}
 # online models
-models['lightfm'] = LightFMWrapperCustom(config)
-models['knn'] = kNN(config)
+models["lightfm"] = LightFMWrapperCustom(config)
+models["knn"] = kNN(config)
 
 # offline models
-models['popular'] = Popular(config)
-models['userknn'] = OfflineModel("userknn", config)
-models['dssm'] = OfflineModel("dssm", config)
-models['encoder'] = OfflineModel("encoder", config)
-models['recbole_recvae'] = OfflineModel("recvae", config)
-models['catboost_ranker'] = OfflineModel("catboost_ranker", config)
+models["popular"] = Popular(config)
+models["userknn"] = OfflineModel("userknn", config)
+models["dssm"] = OfflineModel("dssm", config)
+models["encoder"] = OfflineModel("encoder", config)
+models["recbole_recvae"] = OfflineModel("recvae", config)
+models["catboost_ranker"] = OfflineModel("catboost_ranker", config)
 
 router = APIRouter()
 
@@ -71,7 +71,7 @@ async def get_reco(
         raise ModelNotFoundError(error_message=f"Model {model_name} not found")
 
     if len(reco) < k_recs:
-        reco += models['popular'].recommend(n_recs=k_recs).tolist()
+        reco += models["popular"].recommend(n_recs=k_recs).tolist()
         reco = get_unique(reco)[:k_recs]
     return RecoResponse(user_id=user_id, items=reco)
 
