@@ -8,7 +8,7 @@ class BaseRecommender:
         ...
 
     @abstractmethod
-    def recommend(self, users=None, n=10):
+    def recommend(self, user_id=None, n_recs=10):
         ...
 
     def save(self, filepath):

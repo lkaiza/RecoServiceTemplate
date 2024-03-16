@@ -30,8 +30,8 @@ class Popular(BaseRecommender):
         )
         return self
 
-    def recommend(self, n=10):
-        return self.recommendations[:n]
+    def recommend(self, user_id = None, n_recs=10):
+        return self.recommendations[:n_recs]
 
     def __load_models(self):
         try:

@@ -15,9 +15,9 @@ class kNN:
             N=self.config['knn']['n_users'],
         )
 
-    def recommend(self, user_ids, n_recs=10):
+    def recommend(self, user_id, n_recs=10):
         recs = pd.DataFrame({
-            'user_id': user_ids
+            'user_id': [user_id]
         })
         recs['similar_user_id'], recs['similarity'] = zip(
             *recs['user_id'].map(self.mapper)
@@ -67,24 +67,24 @@ class kNN:
 
     def __load_train_data(self):
         user_item_dict = None
-    # try:
-        interactions = pd.read_csv(
-            self.config['data']['interactions_path'])
-        interactions.drop(
-            [
-                'last_watch_dt',
-                'total_dur',
-            ],
-            inplace=True,
-            axis=1,
-        )
+        try:
+            interactions = pd.read_csv(
+                self.config['data']['interactions_path'])
+            interactions.drop(
+                [
+                    'last_watch_dt',
+                    'total_dur',
+                ],
+                inplace=True,
+                axis=1,
+            )
 
-        interactions['rank'] = interactions.groupby(
-            'user_id').cumcount() + 1
-        interactions = interactions[interactions['rank'] < 11]
-        user_item_dict = interactions.groupby('user_id')[
-            'item_id'
-        ].apply(list).to_dict()
-        # except FileNotFoundError:
-        #     print('data folder is empty')
+            interactions['rank'] = interactions.groupby(
+                'user_id').cumcount() + 1
+            interactions = interactions[interactions['rank'] < 11]
+            user_item_dict = interactions.groupby('user_id')[
+                'item_id'
+            ].apply(list).to_dict()
+        except FileNotFoundError:
+            print('data folder is empty')
         return user_item_dict

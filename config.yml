@@ -28,3 +28,6 @@ dssm:
 
 encoder:
   model_path: data/models/encoder_recs.dill
+
+recvae:
+  model_path: data/models/RecVAE.dill

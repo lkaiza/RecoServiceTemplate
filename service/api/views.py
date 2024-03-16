@@ -18,16 +18,18 @@ class RecoResponse(BaseModel):
 config_path = "config.yml"
 config = read_config(config_path)
 
+models = dict()
 # online models
-lightfm_model = LightFMWrapperCustom(config)
-knn_model = kNN(config)
+models['lightfm'] = LightFMWrapperCustom(config)
+# models['knn'] = kNN(config)
 
 # offline models
-popular_model = Popular(config)
-userknn_model = OfflineModel("userknn", config)
-dssm_model = OfflineModel("dssm", config)
-encoder_model = OfflineModel("encoder", config)
-catboost_model = OfflineModel("catboost_ranker", config)
+models['popular'] = Popular(config)
+models['userknn'] = OfflineModel("userknn", config)
+models['dssm'] = OfflineModel("dssm", config)
+models['encoder']= OfflineModel("encoder", config)
+models['recbole_recvae'] = OfflineModel("recvae", config)
+models['catboost_ranker']= OfflineModel("catboost_ranker", config)
 
 router = APIRouter()
 
@@ -61,29 +63,16 @@ async def get_reco(
     if user_id > 10**9:
         raise UserNotFoundError(error_message=f"User {user_id} not found")
 
-    if model_name == "lightfm" and user_id in lightfm_model.users_mapping:
-        reco = lightfm_model.recommend([user_id])
-    elif model_name == "lightfm" and user_id not in lightfm_model.users_mapping:
-        reco = list()
-    elif model_name == "knn" and user_id in knn_model.users_mapping:
-        reco = knn_model.recommend([user_id], k_recs)
-    elif model_name == "knn" and user_id not in knn_model.users_mapping:
-        reco = list()
-    elif model_name == "catboost_ranker":
-        reco = catboost_model.recommend(user_id, k_recs)
-    elif model_name == "encoder":
-        reco = encoder_model.recommend(user_id, k_recs)
-    # elif model_name == "popular":
-    #     reco = popular_model.recommend(k_recs)
-    # elif model_name == "dssm":
-    #     reco = dssm_model.recommend(user_id, k_recs)
-    # elif model_name == "userknn":
-    #     reco = userknn_model.recommend(user_id, k_recs)
+    if model_name in models.keys():
+        if user_id in models[model_name].users_mapping: 
+            reco = models[model_name].recommend(user_id, k_recs)
+        else:
+            reco = list()
     else:
         raise ModelNotFoundError(error_message=f"Model {model_name} not found")
 
     if len(reco) < k_recs:
-        reco += popular_model.recommend(k_recs).tolist()
+        reco += models['popular'].recommend(n_recs=k_recs).tolist()
         reco = get_unique(reco)[:k_recs]
     return RecoResponse(user_id=user_id, items=reco)
 

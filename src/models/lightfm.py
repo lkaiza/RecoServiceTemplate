@@ -11,7 +11,7 @@ class LightFMWrapperCustom:
         self.__load_models()
 
     def recommend(self, user_id, n_recs=10):
-        user_inner_idx = self.users_mapping[user_id[0]]
+        user_inner_idx = self.users_mapping[user_id]
         items_embedding, user_embedding = self.__get_embeddings(user_inner_idx)
         scores = items_embedding @ user_embedding
         top_score_ids = scores.argsort()[-n_recs:][::-1]
