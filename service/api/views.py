@@ -1,28 +1,34 @@
+import os
 from datetime import timedelta
 from http.client import HTTPException
-from typing import Dict
 
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
-from pydantic import BaseModel
 from typing_extensions import Annotated
 
 from service.api.auth import (
-    ACCESS_TOKEN_EXPIRE_MINUTES,
-    ALGORITHM,
     SECRET_KEY,
+    ALGORITHM,
     authenticate_user,
     create_access_token,
-    get_password_hash,
     get_user,
-    users_db,
 )
 from service.api.exceptions import ModelNotFoundError, UserNotFoundError
 from service.log import app_logger
 from service.models import Error, RecoResponse, Token, TokenData, User
 from service.utils import get_unique, read_config
 from src.models import LightFMWrapperCustom, OfflineModel, Popular, kNN
+
+
+ACCESS_TOKEN_EXPIRE_MINUTES = 300000
+
+users_db = {
+    "bot": {
+        "username": os.getenv("BOT_NAME"),
+        "hashed_password": os.getenv("BOT_PASSWORD"),
+    }
+}
 
 app = FastAPI()
 router = APIRouter()

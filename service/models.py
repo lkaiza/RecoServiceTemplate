@@ -1,10 +1,7 @@
 from datetime import datetime
 from typing import Any, List, Optional, Union
 
-# from database import Base, metadata
-from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
 from pydantic import BaseModel
-from sqlalchemy import JSON, TIMESTAMP, Boolean, Column, ForeignKey, Integer, String, Table
 
 
 class RecoResponse(BaseModel):

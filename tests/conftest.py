@@ -5,7 +5,7 @@ import string
 
 import pytest
 from fastapi import FastAPI
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordBearer
 from starlette.testclient import TestClient
 
 from service.api.app import create_app
