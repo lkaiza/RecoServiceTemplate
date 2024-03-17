@@ -1,6 +1,6 @@
 from http import HTTPStatus
+from typing import Dict
 
-import pytest
 from starlette.testclient import TestClient
 
 from service.settings import ServiceConfig
@@ -20,7 +20,7 @@ def test_get_reco_success(
     client: TestClient,
     service_config: ServiceConfig,
     valid_request_data: dict,
-    valid_token: str,
+    valid_token: Dict[str, str],
 ) -> None:
     user_id = 123
     path = GET_RECO_PATH.format(**valid_request_data)
@@ -35,7 +35,7 @@ def test_get_reco_success(
 
 def test_get_reco_for_unknown_user(
     client: TestClient,
-    valid_token: str,
+    valid_token: Dict[str, str],
 ) -> None:
     user_id = 10**10
     path = GET_RECO_PATH.format(model_name="popular", user_id=user_id)
@@ -48,19 +48,7 @@ def test_get_reco_for_unknown_user(
 def test_get_reco_for_unknown_model(
     client: TestClient,
     unknown_model: str,
-    valid_token: str,
-) -> None:
-    path = GET_RECO_PATH.format(model_name=unknown_model, user_id=1)
-    with client:
-        response = client.get(path, headers=valid_token)
-    assert response.status_code == HTTPStatus.NOT_FOUND
-    assert response.json()["errors"][0]["error_key"] == "model_not_found"
-
-
-def test_get_reco_for_unknown_model(
-    client: TestClient,
-    unknown_model: str,
-    valid_token: str,
+    valid_token: Dict[str, str],
 ) -> None:
     path = GET_RECO_PATH.format(model_name=unknown_model, user_id=1)
     with client:
@@ -72,7 +60,7 @@ def test_get_reco_for_unknown_model(
 def test_get_reco_wrong_token(
     client: TestClient,
     valid_request_data: dict,
-    wrong_token: str,
+    wrong_token: Dict[str, str],
 ) -> None:
     path = GET_RECO_PATH.format(**valid_request_data)
     with client:

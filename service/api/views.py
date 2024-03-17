@@ -1,6 +1,5 @@
 import os
 from datetime import timedelta
-from http.client import HTTPException
 
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -34,7 +33,7 @@ config = read_config(config_path)
 models = {}
 # online models
 models["lightfm"] = LightFMWrapperCustom(config)
-models["knn"] = kNN(config)
+# models["knn"] = kNN(config)
 
 # offline models
 models["popular"] = Popular(config)

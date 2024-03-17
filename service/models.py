@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import Any, List, Optional, Union
 
 from pydantic import BaseModel
@@ -18,6 +17,7 @@ class Error(BaseModel):
 class User(BaseModel):
     username: str
     hashed_password: str
+    disabled: Union[bool, None] = None
 
 
 class Token(BaseModel):
@@ -27,10 +27,3 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: Union[str, None] = None
-
-
-class User(BaseModel):
-    username: str
-    email: Union[str, None] = None
-    full_name: Union[str, None] = None
-    disabled: Union[bool, None] = None

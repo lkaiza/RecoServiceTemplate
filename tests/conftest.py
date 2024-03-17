@@ -5,7 +5,6 @@ import string
 
 import pytest
 from fastapi import FastAPI
-from fastapi.security import OAuth2PasswordBearer
 from starlette.testclient import TestClient
 
 from service.api.app import create_app
@@ -27,7 +26,6 @@ def app(
 
 @pytest.fixture
 def client(app: FastAPI) -> TestClient:
-    oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
     return TestClient(app=app)
 
 
