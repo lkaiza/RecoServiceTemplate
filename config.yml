@@ -1,0 +1,33 @@
+data:
+  interactions_path: data/kion/interactions.csv
+  items_path: data/kion_train/items.csv
+  users_path: data/kion_train/users.csv
+
+knn:
+  model_path: data/models/tfidf_model.dill
+  users_mapping_path: data/models/users_mapping.dill
+  users_inv_mapping_path: data/models/users_inv_mapping.dill
+  n_users: 50
+
+userknn:
+  model_path: data/models/userknn_recs.dill
+
+popular:
+  model_path: data/models/popular.dill
+
+lightfm:
+  model_path: data/models/lfm_model.dill
+  users_mapping_path: data/mappings/users_mapping.dill
+  items_inv_mapping_path: data/mappings/items_inv_mapping.dill
+
+catboost_ranker:
+  model_path: data/models/catboost_ranker_recs.dill
+
+dssm:
+  model_path: data/models/dssm_recs.dill
+
+encoder:
+  model_path: data/models/encoder_recs.dill
+
+recvae:
+  model_path: data/models/RecVAE.dill

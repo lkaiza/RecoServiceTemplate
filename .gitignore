@@ -5,6 +5,9 @@
 # Mac/OSX
 .DS_Store
 
+#Data
+data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -60,8 +63,6 @@ ipython_config.py
 env/
 venv/
 ENV/
-env.bak/
-venv.bak/
 
 # mypy
 .mypy_cache/

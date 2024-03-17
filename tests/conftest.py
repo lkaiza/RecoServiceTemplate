@@ -1,4 +1,5 @@
 # pylint: disable=redefined-outer-name
+import os
 import random
 import string
 
@@ -31,3 +32,19 @@ def client(app: FastAPI) -> TestClient:
 @pytest.fixture
 def unknown_model() -> str:
     return "".join(random.choices(string.ascii_letters, k=10))
+
+
+@pytest.fixture
+def valid_request_data():
+    return {"model_name": "popular", "user_id": 1}
+
+
+@pytest.fixture
+def wrong_token():
+    token = "".join(random.choices(string.ascii_letters, k=126))
+    return {"Authorization": f"Bearer {token}"}
+
+
+@pytest.fixture
+def valid_token():
+    return {"Authorization": f"Bearer {os.getenv('BOT_TOKEN')}"}
