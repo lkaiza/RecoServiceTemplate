@@ -4,11 +4,13 @@ from typing import Union
 
 from jose import jwt
 from passlib.context import CryptContext
+
 from service.models import User
 
 
 class UserInDB(User):
     hashed_password: str
+
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")

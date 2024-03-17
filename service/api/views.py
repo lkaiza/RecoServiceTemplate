@@ -7,19 +7,12 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from typing_extensions import Annotated
 
-from service.api.auth import (
-    SECRET_KEY,
-    ALGORITHM,
-    authenticate_user,
-    create_access_token,
-    get_user,
-)
+from service.api.auth import ALGORITHM, SECRET_KEY, authenticate_user, create_access_token, get_user
 from service.api.exceptions import ModelNotFoundError, UserNotFoundError
 from service.log import app_logger
 from service.models import Error, RecoResponse, Token, TokenData, User
 from service.utils import get_unique, read_config
 from src.models import LightFMWrapperCustom, OfflineModel, Popular, kNN
-
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 300000
 

@@ -9,17 +9,6 @@ from fastapi.security import OAuth2PasswordBearer
 from starlette.testclient import TestClient
 
 from service.api.app import create_app
-from service.api.auth import (
-    ACCESS_TOKEN_EXPIRE_MINUTES,
-    ALGORITHM,
-    SECRET_KEY,
-    authenticate_user,
-    create_access_token,
-    get_password_hash,
-    get_user,
-    users_db,
-)
-from service.models import User
 from service.settings import ServiceConfig, get_config
 
 
